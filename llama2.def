@@ -1,0 +1,11 @@
+Bootstrap: docker
+From: nvcr.io/nvidia/pytorch:23.10-py3
+
+%post
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get update -y
+
+    pip install setuptools
+    pip install install wandb tqdm tiktoken transformers deepspeed openai PyYAML accelerate datasets einops evaluate peft protobuf scikit-learn scipy sentencepiece fire mpi4py fairscale
+    # for JGLUE
+    pip install bs4 zenhan mecab-python3 pyknp ipadic
