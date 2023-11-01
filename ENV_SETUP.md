@@ -24,5 +24,16 @@ singularity exec --bind /scratch/$USER/llama2-playground:/scratch/$USER/llama2-p
 ```
 
 ## Docker
+```
+ssh-add ~/.ssh/id_rsa
+ssh -A -o ServerAliveInterval=1 {server_name}
+git clone git@github.com:kenoharada/llama2-playground.git
+cd llama2-playground
+docker build -t llama2-playground .
+export PORT_NUM=8890
+docker run -p $PORT_NUM:$PORT_NUM --mount type=bind,src=$PWD,dst=$PWD --workdir $PWD -it --ipc host --gpus all --rm --name `whoami`_llama2-playground llama2-playground jupyter lab --port $PORT_NUM --ip=0.0.0.0 --allow-root
+# localの別terminalで, tokenを入力
+ssh -NfL localhost:8890:localhost:8890 {server_name}; open http://localhost:8890/?token=
+```
 
 ## Singularity
